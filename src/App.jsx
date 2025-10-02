@@ -1,75 +1,69 @@
-import { useState } from "react";
 import "./App.css";
+function tinhTuoi(ngaySinh) {
+  const dob = new Date(ngaySinh);
+  const now = new Date();
+  let tuoi = now.getFullYear() - dob.getFullYear();
+  const m = now.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) tuoi--;
+  return tuoi;
+}
 
 export default function App() {
-  // state cho theme
-  const [dark, setDark] = useState(true);
-  // state cho màu nền content
-  const [color, setColor] = useState("#fff");
-  // state cho ẩn/hiện kỹ năng
-  const [showSkills, setShowSkills] = useState(true);
+  // ====== DỮ LIỆU ======
+  const thongTin = {
+    hoTen: "Hoàng Thị Diễm Quỳnh",
+    ngheNghiep: "Lập trình giao diện",
+    email: "hoangquynhhello@gmail.com",
+    sdt: "0947 732 071",
+    ngaySinh: "2004-08-25",
+    queQuan: "phường Đông Hà, tỉnh Quảng Trị",
+    anh: "/Anh.jpg",
+  };
+
+  const kyNangChuyenMon = ["HTML, CSS (Grid/Flex)", "JavaScript", "React", "Git/GitHub"];
+  const kyNangMem = ["Kĩ năng làm việc nhóm", "Kĩ năng quản lý thời gian", "Kĩ năng giao tiếp"];
+  const duAn = ["CV Website – React + Vite", "Todo App – React Hooks"];
+  const chungChi = ["Chứng chỉ B1", "Chứng chỉ giáo dục quốc phòng", "Chứng chỉ giáo dục thể chất"];
+  const kinhNghiem = ["Nhân viên phục vụ", "Gia sư tiếng anh"];
+
+  const tuoi = tinhTuoi(thongTin.ngaySinh);
+  const namHienTai = new Date().getFullYear();
+
+  // ====== HÀM XỬ LÝ ======
+  const inCV = () => window.print();
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(thongTin.email);
+      alert("Đã copy email vào clipboard!");
+    } catch {
+      alert("Không copy được email, hãy thử thủ công.");
+    }
+  };
 
   return (
-    <div
-      className="cv"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "300px 1fr",
-        gap: "20px",
-        maxWidth: "1000px",
-        margin: "20px auto",
-        padding: "20px",
-        borderRadius: "12px",
-        background: "#fff",
-        boxShadow: "0 8px 24px rgba(0,0,0,.08)",
-      }}
-    >
-      {/* Sidebar */}
-      <aside
-        style={{
-          background: dark ? "#2c2f36" : "#f0f0f0",
-          color: dark ? "#fff" : "#000",
-          padding: "20px",
-          borderRadius: "12px",
-        }}
-      >
-        <img
-          src="/unnamed.png"
-          alt="Ảnh đại diện"
-          style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            marginBottom: "10px",
-          }}
-        />
-        
-        <h2>Lập trình giao diện</h2>
+    <div className="cv">
+      {/* Cột bên trái */}
+      <aside className="sidebar">
+        <img src={thongTin.anh} alt="Ảnh đại diện" className="avatar" />
+        <h2 className="role">{thongTin.ngheNghiep}</h2>
 
-        <section>
+        <section className="contact">
           <h3>Liên hệ</h3>
-          <p>Email: hoangquynhhello@gmail.com</p>
-          <p>SĐT: 0947 732 071</p>
-          <p>Ngày sinh: 25/08/2004</p>
-          <p>Quê quán: phường Đông Hà, tỉnh Quảng Trị</p>
+          <p>
+            Email: <a href={`mailto:${thongTin.email}`}>{thongTin.email}</a>{" "}
+            <button className="chip" onClick={copyEmail}>Copy</button>
+          </p>
+          <p>SĐT: {thongTin.sdt}</p>
+          <p>Ngày sinh: 25/08/2004 (≈ {tuoi} tuổi)</p>
+          <p>Quê quán: {thongTin.queQuan}</p>
+          <button className="primary" onClick={inCV}>🖨️ In / Lưu PDF</button>
         </section>
-
-        {/* Các nút vui vẻ */}
-        <div style={{ marginTop: "20px", display: "grid", gap: "8px" }}>
-          <button onClick={() => setDark(!dark)}>Đổi theme</button>
-          <button onClick={() => setColor(color === "#fff" ? "#e0f7fa" : "#fff")}>
-            Đổi màu nền nội dung
-          </button>
-          <button onClick={() => setShowSkills(!showSkills)}>
-            {showSkills ? "Ẩn kỹ năng" : "Hiện kỹ năng"}
-          </button>
-        </div>
       </aside>
 
-      {/* Content */}
-      <main style={{ background: color, padding: "20px", borderRadius: "12px" }}>
-        <h1 className="name">Hoàng Thị Diễm Quỳnh</h1>
+      {/* Cột bên phải */}
+      <main className="content">
+        <h1 className="name">{thongTin.hoTen}</h1>
+
         <section>
           <h2>Tóm tắt</h2>
           <p>
@@ -78,52 +72,32 @@ export default function App() {
           </p>
         </section>
 
-        {showSkills && (
-          <section>
-            <h2>Kỹ năng chuyên môn</h2>
-            <ul>
-              <li>HTML, CSS (Grid/Flex)</li>
-              <li>JavaScript</li>
-              <li>React</li>
-              <li>Git/GitHub</li>
-            </ul>
-          </section>
-        )}
-        {showSkills &&(
-          <section>
-            <h2>Kĩ năng mềm</h2>
-            <ul>
-              <li>Kĩ năng làm việc nhóm</li>
-              <li>Kĩ năng quản lý thời gian</li>
-              <li>Kĩ năng giao tiếp</li>
-            </ul>
-          </section>
-        )
+        <section>
+          <h2>Kỹ năng chuyên môn</h2>
+          <ul>{kyNangChuyenMon.map((muc) => <li key={muc}>{muc}</li>)}</ul>
+        </section>
 
-        }
+        <section>
+          <h2>Kĩ năng mềm</h2>
+          <ul>{kyNangMem.map((muc) => <li key={muc}>{muc}</li>)}</ul>
+        </section>
 
         <section>
           <h2>Dự án</h2>
-          <ul>
-            <li>CV Website – React + Vite</li>
-            <li>Todo App – React Hooks</li>
-          </ul>
+          <ul>{duAn.map((muc) => <li key={muc}>{muc}</li>)}</ul>
         </section>
+
         <section>
           <h2>Chứng chỉ</h2>
-          <ul>
-            <li>Chứng chỉ B1</li>
-            <li>Chứng chỉ giáo dục quốc phòng</li>
-            <li>Chứng chỉ giáo dục thể chất</li>
-          </ul>     
+          <ul>{chungChi.map((muc) => <li key={muc}>{muc}</li>)}</ul>
         </section>
+
         <section>
           <h2>Kinh nghiệm làm việc</h2>
-          <ul>
-            <li>Nhân viên phục vụ</li>
-            <li>Gia sư tiếng anh</li>
-          </ul>
+          <ul>{kinhNghiem.map((muc) => <li key={muc}>{muc}</li>)}</ul>
         </section>
+
+        <footer className="footer">© {namHienTai} {thongTin.hoTen}</footer>
       </main>
     </div>
   );
