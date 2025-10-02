@@ -1,0 +1,111 @@
+/* base */
+* { box-sizing: border-box; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  color: #333;
+}
+
+/* khung 2 cột: sidebar hẹp, content rộng */
+.cv {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  max-width: 1000px;
+  margin: 16px auto;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+/* sidebar */
+.sidebar {
+  background: #2c2f36;
+  color: #fff;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+  align-items: start;
+}
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  margin: 6px auto 10px;
+  border: 2px solid rgba(255,255,255,.15);
+}
+/* fallback nếu .avatar chưa áp dụng */
+.sidebar > img {
+  max-width: 140px;
+  max-height: 140px;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 6px auto 10px;
+  border-radius: 12px;
+}
+.sidebar h1 {
+  margin: 4px 0 2px;
+  font-size: 20px;
+  line-height: 1.25;
+}
+.name{
+  margin-block: 16px 28px !important;  
+  line-height: 1.2;
+  
+}
+.sidebar .job {
+  margin: 0 0 10px;
+  color: #b9c1cc;
+  font-weight: 600;
+}
+/* nhãn tiêu đề nhỏ trong sidebar */
+.sidebar h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #8fb6ff;
+  border-left: 3px solid #8fb6ff;
+  padding-left: 8px;
+  margin: 12px 0 6px;
+}
+.sidebar p {
+  margin: 4px 0;
+  font-size: 16px;
+  line-height: 2;
+ }
+
+/* content (cột phải) */
+.content {
+  padding: 20px;
+  background: #fff;
+  display: grid;
+  gap: 14px;
+}
+.content section {
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.content h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #0d6efd;
+  border-bottom: 2px solid #e9eef3;
+  padding-bottom: 6px;
+}
+.content ul { margin: 8px 0 0 18px; }
+.content li { margin: 6px 0; }
+
+/* responsive */
+@media (max-width:820px) {
+  .cv { grid-template-columns: 1fr; }
+  .avatar { width: 96px; height: 96px; }
+  .content { padding: 16px; }
+}
